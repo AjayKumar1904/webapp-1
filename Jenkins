@@ -17,8 +17,10 @@ pipeline {
     }
     stage ('Deploy to tomacat'){
     steps {
-       sh 'cp target/*.war /root/apache-tomcat-8.5.54/webapps/webapp.war'
+    sshagent(['local']){
+       sh 'scp -o StrictHostKeyChecking=no target/*.war root@localhost:/root/apache-tomcat-8.5.54/webapps/webapp.war'
        }
+      }
     }
   }
 }
